@@ -1,14 +1,14 @@
 ### Juan Santos, November 2022
 
-#INTRODUCTION
+# INTRODUCTION
 
-#SUPPORTED PLATFORMS
+# SUPPORTED PLATFORMS
 
 Linux, Mac OS
 
 The shell scripts (*.sh) of this software were designed and tested using GNU bash (v4.4.20) in a Ubuntu 18.04 linux system. The R scripts were tested in using R console (v4.1.1) in macOS Monterey.
 
-#PREREQUISITES
+# PREREQUISITES
 
 fastqc (v0.11.9)
 cutadapt (v4.1 with Python 3.8.5)
@@ -18,7 +18,7 @@ bedtools (v2.26.0)
 samtools (v1.3.1)
 
 
-#SETTING UPP THE PROJECT
+# SETTING UPP THE PROJECT
 
 The raw data (fastq files) are allocated in sample folders. Most intermediary and final output files will be generated in respective sample folders. In the example there are four samples: two conditions (mutant and wt) with two replicates each (rep1 and rep2).
 
@@ -34,11 +34,11 @@ REPLICATES_TOTAL/
     └── Col_Rep2_FKDL210177288-1a-2_H3TM7DSX2_L4_1.fq.gz
 
 
-#SETTING UP GENOMIC REFERENCES
+# SETTING UP GENOMIC REFERENCES
 
-#INSTALLATION
+# INSTALLATION
 
-#USAGE
+# USAGE
 
 step 0: setting up the project directory
 I usually set up the directory for an RNA-seq analysis like this, if I'm starting with raw reads:
