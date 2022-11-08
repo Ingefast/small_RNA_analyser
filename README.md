@@ -23,23 +23,17 @@ samtools (v1.3.1)
 The raw data (fastq files) are allocated in sample folders. Most intermediary and final output files will be generated in respective sample folders. In the example there are four samples: two conditions (mutant and wt) with two replicates each (rep1 and rep2).
 
 
-### Table
-
-| Syntax | Description |
-| ----------- | ----------- |
-| Header | Title |
-| Paragraph | Text |
-
-REPLICATES_TOTAL
-    |-- mutant_rep1
-        |-- mutant_Rep1_FKDL210177288-1a-3_H3TM7DSX2_L4_1.fq.gz
-    |-- mutant_rep2
-        |-- mutant_Rep2_FKDL210177288-1a-4_H3TM7DSX2_L4_1.fq.gz
-    |-- wt_rep1
-        |-- Col_Rep1_FKDL210177288-1a-1_H3TM7DSX2_L4_1.fq.gz
-    |-- wt_rep2
-        |-- Col_Rep2_FKDL210177288-1a-2_H3TM7DSX2_L4_1.fq.gz
-
+```
+    |-- REPLICATES_TOTAL
+        |-- mutant_rep1
+            |-- mutant_Rep1_FKDL210177288-1a-3_H3TM7DSX2_L4_1.fq.gz
+        |-- mutant_rep2
+            |-- mutant_Rep2_FKDL210177288-1a-4_H3TM7DSX2_L4_1.fq.gz
+        |-- wt_rep1
+            |-- Col_Rep1_FKDL210177288-1a-1_H3TM7DSX2_L4_1.fq.gz
+        |-- wt_rep2
+            |-- Col_Rep2_FKDL210177288-1a-2_H3TM7DSX2_L4_1.fq.gz
+```
 
 # SETTING UP GENOMIC REFERENCES
 
