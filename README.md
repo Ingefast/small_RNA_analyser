@@ -30,7 +30,7 @@ samtools (v1.3.1)
 
 # SETTING UP THE WORKING DIRECTORY AND THE GENOMIC REFERENCE FILES
 
-The raw data (fastq files) are allocated in sample folders following the file structure below. The parent directory is called **REPLICATES_TOTAL** because it is important to run first the whole analysis with single replicates. Merging of replicates within conditions is usually considered after this first analysis after evaluation of the results, the merging itself can be performed at different stages (from raw sequences to fully processed files) depending on data structure, experimental design and taste. Most intermediary and final output files will be generated in respective sample folders. As example four samples are used: two conditions (*mutant* and *wt*) with two replicates each (*rep1* and *rep2*). 
+The raw data (fastq files) are allocated in sample folders under a parent directory (/**REPLICATES_TOTAL**) following the file structure below. Single replicates are the basic units of this pipeline. Merging of replicates within conditions is usually considered after a first evaluation of the results, the merging itself can be performed at different stages (from raw sequences to fully processed files) depending on data structure, experimental design and taste. Most intermediary and final output files will be generated in respective sample folders. As example four samples are used: two conditions (*mutant* and *wt*) with two replicates each (*rep1* and *rep2*). 
 
 ```
     ├── REPLICATES_TOTAL
@@ -76,9 +76,9 @@ sample_list="mutant_rep1  mutant_rep2  wt_rep1  wt_rep2";
 
 ```
 
-Ordinary fasta files and bowtie indexed fasta files (bowtie-build) should be available for the the relevant assembly ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release))
+Ordinary fasta files and bowtie indexed fasta files (bowtie-build) should be available for the relevant assembly ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release))
 
-If removing structural RNAs is wanted prior to downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (bedtools getfasta) and bowtie-indexed accordingly.
+If removing structural RNAs is wanted prior to downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (bedtools getfasta) and bowtie-indexed accordingly. Otherwise the pipeline can be modified accordingly skipping this step.
 
 Annotation files (gtf or gff3) have to be transformed to a 6-column bed format looking like in the one below (**TAIR10_genes_isoform1_annot.bed**).
 
@@ -106,7 +106,7 @@ Chr5	26975502
 ```
 # INSTALLATION
 
-Shell scripts can be downloaded and run directly on a linux server.
+Shell scripts can be cloned and run directly on a linux server.
 
 # WORKFLOW
 
@@ -117,15 +117,15 @@ Read quality (fastqc) is assessed before and after adapter trimming (cutadapt). 
 ```
 nohup bash sRNA.Filter.sh
 ```
-A final file with trimmed reads in raw text format is generated: **sample.trimmed.txt**.
+A final file with trimmed reads in raw text format is generated (**sample.trimmed.txt**).
 
 ## 2. Removal of structural RNAs
-Trimmed sequences belonging to structural RNAs and 'real' sRNA reads are separated by mapping (bowtie) the reads to a fasta file with sequences of only structural RNAs. Unmapped reads are considered for downstream analysis and only those mapping without mismatches to the genome are kept: **sample.perfect.txt**.
+Trimmed sequences belonging to structural RNAs and 'real' sRNA reads are separated by mapping (bowtie) the reads to a fasta file of only structural RNAs. Unmapped reads are considered for downstream analysis and, after a second mapping, only those aligning without mismatches to the genome are kept (**sample.perfect.txt**).
 
 ```
 nohup bash sRNA.Filter.sh
 ```
-In addition a table containing unique sequence signatures,  their abundance and length is generated: **sample.perfect.pivot.table.txt**.
+In addition a table containing unique sequence signatures, their abundance and length is generated (**sample.perfect.pivot.table.txt**).
 
 ```
 TCCGCTGTAGCACACAGGC 173995	19
@@ -139,6 +139,7 @@ TCCTCTGTAGCACACAGGC 27854	19
 TCGATAAACCTCTGCATCCAG 27829	21
 TCGGACTGCTCGAGCTGC 26830	18
 ```
+
 ## 3. Mapping of selected sRNA size ranges.
 
 Once the working population of sRNA reads have been filtered, further processing can be done selecting customised sRNA sizes. In addition to the user defined whole range of sRNA reads (here 18-30nt), other usual choices are the 21-22 nt and 24 nt categories.
@@ -148,32 +149,55 @@ This time reads are mapped using ShortStack which is a wrapper of bowtie designe
 nohup bash sRNA.Mapper.range_1830nt.sh
 ```
 
-## 4. Plotting sRNA size distribution over over genes and transposable elements.
+**genomic_RPM_values.genes.txt**, **genomic_RPM_values.tes.txt**
+```
+Chr1    23146   31227   AT1G01040       .       +       1.245824286
+Chr1    28500   28706   AT1G01046       .       +       0
+Chr1    31170   33153   AT1G01050       .       -       0.5813833333
+Chr1    33666   37840   AT1G01060       .       -       0.7474928571
+```
+
+**gene.counts.txt**, **te.counts.txt**
 
 
-# SIZE DISTRIBUTION
+**gene.reads**, **te.reads**
+```
+Chr1	16990	17013	776187	Chr1	16882	17009	AT1TE00020
+Chr1	17004	17027	84575	Chr1	16882	17009	AT1TE00020
+Chr1	17004	17027	84575	Chr1	17023	18924	AT1TE00025
+Chr1	17856	17874	178759	Chr1	17023	18924	AT1TE00025
+```
+**srna_ids.txt**
+```
+520486  GATTCAAGACTTCTCGGTACT
+84989   GTACTGCAAAGTTCTTCCGCC
+155073  ACTGCAAAGTTCTTCCGCCTGAT
+231101  ACTGCAAAGTTCTTCCGCCT
+```
 
-#develop this
-/Users/jsantos/Documents/PROJECTS/jiali_sRNA_grafting_Mac/analysis/Q0_sRNA_size_distribution_over_genes_and_tes/gene.endo.summary_plotsize_distributions.r 
+![This is an image](/images/figure_bedgraph.png)
 
 
-![This is an image](/images/plot1.png)
+## 4. Checking replicability and data structure in the data set. Multivariate analysis  and correlogram.
+
+![This is an image](/images/figure_correlogram.png)
+
+## 5. sRNA size distribution over over genes and transposable elements.
+
+
+![This is an image](/images/figure_sizedistribution.png)
 
 *Figure 1. sRNA size distribution over genes and transposable elements*
 
-# MULTIVARIATE ANALYSIS
-#develop this
 
-# CORRELOGRAMS /Users/jsantos/Documents/PROJECTS/jiali_sRNA_grafting_Mac/analysis/Q0_correlogram/sRNA_on_genes.24nt.CORRELOGRAMS.r
  
 # REFERENCES
 
-Modified versions of this pipeline have been used to process sRNA data in the following papers:
+Modified versions of this pipeline have been used to process the sRNA datasets in the following papers:
 
 1. Martinez G et al (2018). Paternal easiRNAs regulate parental genome dosage in *Arabidopsis*. **Nature Genetics** 50 (2) 193-198.
 
 2. Wang Z et al (2020). Polymerase IV Plays a Crucial Role in Pollen Development in *Capsella*. **Plant Cell** 32 (4) 950-966.
-
 
 # CONTACT
 juan.sverige at slu.se
