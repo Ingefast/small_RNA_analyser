@@ -1,19 +1,20 @@
+![This is an image](/images/srna_title.png)
 ### *Juan Santos*, September 2022
 
 
 # INTRODUCTION
 
-This is a general pipeline for analysis of small RNA (sRNA) sequencing data from Illumina. It has mainly been developed with focus on the *Arabidopsis* TAIR10 genome and some related species, but it should be fully functional with other organisms. The scripts do not require command line arguments to be run; input and reference genomic files have to be specified by editing the script in a text editor. Therefore, some very basic knowledge of linux and R is required. The processes are generously commented in hashes in the script with complementary suggestions and hints (worth to read as a complement to this instruction).
+This is a general pipeline for analysis of small RNA (sRNA) sequencing data from Illumina. It has mainly been developed with focus on the *Arabidopsis* TAIR10 genome and some related species, but it should be fully functional with other organisms. The scripts do not require to pass command-line arguments; settings like input data and reference genomic files have to be specified by editing the script in a text editor. Therefore, some very basic knowledge of linux and R is required. The scripts are generously commented in hashes (#) with complementary suggestions and hints (worth to read as a complement to this instruction).
  
 # SUPPORTED PLATFORMS
 
 Linux, Mac OS
 
-The bash scripts (*.sh) of this software were designed and tested using GNU bash (v4.4.20) in a Ubuntu 18.04 linux system. The R scripts were tested in using R console (v4.1.1) in macOS Monterey.
+Shell scripts (*.sh) of this software were developed and tested using GNU bash (v4.4.20) in a Ubuntu 18.04 linux system. R scripts were developed using the R console (v4.1.1) in macOS Monterey.
 
 # DEPENDENCIES
 
-The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other versions are most likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
+The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other modern versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
 
 fastqc (v0.11.9)
 
@@ -29,7 +30,7 @@ samtools (v1.3.1)
 
 # SETTING UP THE WORKING DIRECTORY AND THE GENOMIC REFERENCE FILES
 
-The raw data (fastq files) are allocated in sample folders following the file structure below. The parent directory is called **REPLICATES_TOTAL** because we consider crucial to work first through the whole analysis with single replicates. Merging of replicates within conditions is usually considered after this first analysis, the merging itself can be performed at different stages (from raw sequences to fully processed files) depending on data structure and experimental design. Most intermediary and final output files will be generated in respective sample folders. In the example there are four samples: two conditions (*mutant* and *wt*) with two replicates each (*rep1* and *rep2*). 
+The raw data (fastq files) are allocated in sample folders following the file structure below. The parent directory is called **REPLICATES_TOTAL** because it is important to run first the whole analysis with single replicates. Merging of replicates within conditions is usually considered after this first analysis after evaluation of the results, the merging itself can be performed at different stages (from raw sequences to fully processed files) depending on data structure, experimental design and taste. Most intermediary and final output files will be generated in respective sample folders. As example four samples are used: two conditions (*mutant* and *wt*) with two replicates each (*rep1* and *rep2*). 
 
 ```
     ├── REPLICATES_TOTAL
@@ -43,19 +44,43 @@ The raw data (fastq files) are allocated in sample folders following the file st
             └── Col_Rep2_FKDL210177288-1a-2_H3TM7DSX2_L4_1.fq.gz
 ```
 
-The working environment and samples have to be specified by editing respective shell script (*.sh).
+The working directory, sample directories and reference genomic files have to be specified by editing the header of the respective shell script (*.sh).
 
 ```
+##################################################################################
+###########  Reference files to be used and working dir        ###################
+##################################################################################
+
+#genomic assembly in fasta format
+genome_assembly_fasta="/home/jsantos/genome_ref/TAIR10/bowtie1/TAIR10_chr_all.fasta"
+
+#genomic chromosome sizes txt file
+genome_chr_sizes="/home/jsantos/genome_ref/TAIR10/TAIR10.chrom.sizes"
+
+#bowtie1 indexes to be used
+genome_non_sRNA_bw_idx="/home/jsantos/genome_ref/TAIR10/sRNA_filter/non_sRNA"
+genome_bw_idx="/home/jsantos/genome_ref/TAIR10/bowtie1/TAIR10"
+
+#annotation files in bed format
+genes_annot_bed="/home/jsantos/genome_ref/TAIR10/bed_landscape/TAIR10_genes_isoform1_annot.bed"
+tes_annot_bed="/home/jsantos/genome_ref/TAIR10/bed_landscape/TAIR_transposable_elements_6col.bed"
+
+##################################################################################
+
 #working directory where all the sample directories are allocated
-working_dir="/media/diskb/nicolas_tmp/REPLICATES_TOTAL";
+working_dir="/media/diskb/nicolas_tmp/REPLICATES_TOTAL"
 
 #this defines the samples to be analysed (dir names)
-sample_list="atrm1_rep1  atrm1_rep2  wt_rep1  wt_rep2";
+sample_list="mutant_rep1  mutant_rep2  wt_rep1  wt_rep2";
+#sample_list="test_rep1";
+
 ```
 
-Relevant reference genomic files have to be specified as well att the beginning if the shell script requires so. Ordinary fasta files and bowtie indexed fasta files (bowtie-build) should be available. If removing structural RNAs is wanted prior to downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (bedtools getfasta) and bowtie-indexed accordingly.
+Ordinary fasta files and bowtie indexed fasta files (bowtie-build) should be available for the the relevant assembly ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release))
 
-Annotation files (gtf or gff3) have to be transformed to a 6-column bed format looking like in the one below.
+If removing structural RNAs is wanted prior to downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (bedtools getfasta) and bowtie-indexed accordingly.
+
+Annotation files (gtf or gff3) have to be transformed to a 6-column bed format looking like in the one below (**TAIR10_genes_isoform1_annot.bed**).
 
 ```
 Chr1	3631	5899	AT1G01010	.	+
@@ -71,6 +96,14 @@ Chr1	45296	47019	AT1G01080	.	-
 ```
 Two annotation bed files, one for genes and one for transposable elements, are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The gff2bed tool from BEDOPS suit is an option. Another possibility, sometimes more pragmatic, is processing it with a combination of linux regular expressions and/or manual editing in a text editor.
 
+Chromosome sizes should also be specified in a reference file (**TAIR10.chrom.sizes**).
+```
+Chr1	30427671
+Chr2	19698289
+Chr3	23459830
+Chr4	18585056
+Chr5	26975502
+```
 # INSTALLATION
 
 Shell scripts can be downloaded and run directly on a linux server.
