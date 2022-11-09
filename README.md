@@ -115,7 +115,7 @@ Shell scripts can be cloned and run directly on a linux server.
 Read quality (fastqc) is assessed before and after adapter trimming (cutadapt). An additional size range trimming is performed, typically selecting a population of reads between 18 and 30 nt long.
 
 ```
-nohup bash sRNA.Filter.sh
+nohup bash sRNA.QC_Trimmer.sh
 ```
 A final file with trimmed reads in raw text format is generated (**sample.trimmed.txt**).
 
