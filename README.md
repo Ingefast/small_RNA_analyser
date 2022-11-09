@@ -175,19 +175,17 @@ Chr1	17856	17874	178759	Chr1	17023	18924	AT1TE00025
 231101  ACTGCAAAGTTCTTCCGCCT
 ```
 
-![This is an image](/images/figure_bedgraph.png)
-
 
 ## 4. Checking replicability and data structure in the data set. Multivariate analysis  and correlogram.
 
-![This is an image](/images/figure_correlogram.png)
+![This is an image](/images/figure1.png)
 
 ## 5. sRNA size distribution over over genes and transposable elements.
 
 
-![This is an image](/images/figure_sizedistribution.png)
+![This is an image](/images/figure2.png)
 
-*Figure 1. sRNA size distribution over genes and transposable elements*
+*Figure 2. sRNA size distribution over genes and transposable elements*
 
 
  
