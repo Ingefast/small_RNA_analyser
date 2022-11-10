@@ -115,7 +115,7 @@ Read quality (fastqc) is assessed before and after adapter trimming (cutadapt). 
 
 Usage:
 ```
-nohup bash sRNA.Filter.sh
+nohup bash sRNA.QC_Trimmer.sh
 ```
 A final file with trimmed sequences in raw text format is generated (**sample.trimmed.txt**).
 
