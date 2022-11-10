@@ -13,7 +13,7 @@ Shell scripts (*.sh) of this software were developed and tested using GNU bash (
 
 # DEPENDENCIES
 
-The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other modern versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
+The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
 
 fastqc (v0.11.9)
 
@@ -29,7 +29,7 @@ samtools (v1.3.1)
 
 # SETTING UP THE WORKING DIRECTORY AND THE GENOMIC REFERENCE FILES
 
-The raw data (Illumina single-end fastq files) are allocated in sample folders under a parent directory (/**REPLICATES_TOTAL**) following the file structure below. Single replicates are the basic units of this pipeline. Merging of replicates within conditions is usually considered after a first evaluation of the results, the merging itself can be performed at different stages (from raw sequences to fully processed files) depending on data structure, experimental design and taste. It is not handled here. Intermediary and final output files will be generated in respective sample folders. In the following example four samples are used: two conditions (*mutant* and *wt*) with two replicates each (*rep1* and *rep2*). 
+The raw data (Illumina single-end fastq files) should be allocated in sample folders under a parent directory (/**REPLICATES_TOTAL**) following the file structure below. Single replicates are the basic units of this pipeline. Merging of replicates within conditions is usually considered after a first evaluation of the results, the merging itself can be performed at different stages (from raw sequences to fully processed files) depending on data structure, experimental design and taste. It is not handled here. Intermediary and final output files will be generated in respective sample folders. In the following example four samples are used: two conditions (*mutant* and *wt*) with two replicates each (*rep1* and *rep2*). 
 
 ```
     ├── REPLICATES_TOTAL
@@ -85,7 +85,7 @@ Chr1	11649	13714	AT1G01030	.	-
 Chr1	23146	31227	AT1G01040	.	+
 Chr1	28500	28706	AT1G01046	.	+
 ```
-Two annotation bed files, one for genes and one for transposable elements, are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The [gff2bed](https://bedops.readthedocs.io/en/latest/content/reference/file-management/conversion/gff2bed.html) tool from BEDOPS suit is an option. Another possibility, often more pragmatic, is to process it with a combination of linux regular expressions and/or manual editing in a text editor.
+Two annotation bed files, one for genes and one for transposable elements (TE), are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The [gff2bed](https://bedops.readthedocs.io/en/latest/content/reference/file-management/conversion/gff2bed.html) tool from BEDOPS suit is an option. Another possibility, often more pragmatic, is to process it with a combination of linux regular expressions and/or manual editing in a text editor.
 
 Chromosome sizes should also be specified in a reference file (**TAIR10.chrom.sizes**) in the followin way.
 ```
@@ -197,14 +197,14 @@ The processed data provided so far opens a wide range of analytical possibilitie
 Two common basic analyses are presented here as examples.
 
 ## 1. Checking data structure and replicability in the data set. Multivariate analysis and correlogram.
-With **sRNA.correlogram_plotter.r** it is possible to analyse the table **total_table.size_24.genes.txt** to plot the correlation between particular sRNA expression values across all the samples. A scatterplot in the lower diagonal panel is presented and Pearson correlation coefficients in the upper panel (Figure 2B). The script **sRNA.ordination_analyser.r** performs a multivariate analysis using the same  input table to evaluate the similarities between samples. By default the samples are ordinated with Nonmetric multidimensional scaling (NMDS) as implemented in the R library vegan. Principal component analysis (PCA) and redundancy analysis (RDA) are also available as alternative ordination approaches (Figure 2C).
+With **sRNA.correlogram_plotter.r** it is possible to analyse the table **total_table.size_24.genes.txt** to plot the correlation between particular sRNA expression values across all the samples. A scatterplot in the lower diagonal panel is presented and Pearson correlation coefficients in the upper panel (Figure 2B). The script **sRNA.ordination_analyser.r** performs a multivariate analysis using the same  input table to evaluate the similarities between samples. By default the samples are ordinated with Nonmetric multidimensional scaling (NMDS) as implemented in the R library vegan (Figure 2C). Principal component analysis (PCA) and redundancy analysis (RDA) are also available as alternative ordination approaches.
 
 ![This is an image](/images/figure1.png)
 
 *Figure 1*. (A) bedGraph files of a wildtype in *Capsella* for different sRNA sizes. (B) Correlogram of 24nt sRNA values over genes in three conditions with two replicates each. (C) NMDS diagram of the same dataset.
 
 ## 2. sRNA size distribution over over genes and transposable elements.
-Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script **sRNA.size_distribution_plotter.r** plots the abundance (RPM) of sRNA reads of different size over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
+Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script **sRNA.size_distribution_plotter.r** plots the abundance (RPM) of sRNA reads of different sizes over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
 
 ```
 sample_name	mapped
@@ -235,4 +235,4 @@ Modified versions of this pipeline have been used to process the sRNA datasets i
 2. Wang Z et al (2020). Polymerase IV Plays a Crucial Role in Pollen Development in *Capsella*. **Plant Cell** 32 (4) 950-966.
 
 # CONTACT
-juan.sverige at slu.se
+juan.santos at slu.se
