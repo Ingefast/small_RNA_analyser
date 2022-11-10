@@ -71,8 +71,6 @@ working_dir="/media/diskb/nicolas_tmp/REPLICATES_TOTAL"
 
 #this defines the samples to be analysed (dir names)
 sample_list="mutant_rep1  mutant_rep2  wt_rep1  wt_rep2";
-#sample_list="test_rep1";
-
 ```
 If removing structural RNAs is wanted before downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (with e.g. bedtools getfasta) and bowtie-indexed accordingly. Otherwise the pipeline can easily be modified skipping this step.
 
