@@ -196,15 +196,14 @@ The processed data provided so far opens a wide range of analytical possibilitie
 
 Two common basic analyses are presented here as examples.
 
-1. Checking data structure and replicability in the data set. Multivariate analysis and correlogram.
+## 1. Checking data structure and replicability in the data set. Multivariate analysis and correlogram.
 With **sRNA.correlogram_plotter.r** it is possible to analyse the table **total_table.size_24.genes.txt** to plot the correlation between particular sRNA expression values across all the samples. A scatterplot in the lower diagonal panel is presented and Pearson correlation coefficients in the upper panel (Figure 2B). The script **sRNA.ordination_analyser.r** performs a multivariate analysis using the same  input table to evaluate the similarities between samples. By default the samples are ordinated with Nonmetric multidimensional scaling (NMDS) as implemented in the R library vegan. Principal component analysis (PCA) and redundancy analysis (RDA) are also available as alternative ordination approaches (Figure 2C).
 
 ![This is an image](/images/figure1.png)
 
 *Figure 1*. (A) bedGraph files of a wildtype in *Capsella* for different sRNA sizes. (B) Correlogram of 24nt sRNA values over genes in three conditions with two replicates each. (C) NMDS diagram of the same dataset.
 
-2. sRNA size distribution over over genes and transposable elements.
-
+## 2. sRNA size distribution over over genes and transposable elements.
 Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script plots the abundance (RPM) of sRNA reads of different size over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
 
 ```
