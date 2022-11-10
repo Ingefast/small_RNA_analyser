@@ -96,7 +96,7 @@ Chr4	18585056
 Chr5	26975502
 ```
 
-Annotation files, a fasta file with structural RNAs, and a chromosome size file for the TAIR10 **Arabidopsis** genome are provided under [example](/example/genomic_reference_files).
+Annotation files in bed format, a fasta file with structural RNAs, and a text chromosome size file for the TAIR10 **Arabidopsis** genome are provided under [example](/example/genomic_reference_files).
 
 Ordinary assembly fasta files and bowtie indexed fasta files (bowtie-build) should be available for the relevant genome and are usually downloadable from general or organism-specific genome repositories like ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release)).
 
@@ -113,16 +113,16 @@ cd small_RNA_analyser
 
 ## 1. Quality Control and Adapter Trimming.
 
-Read quality (fastqc) is assessed before and after adapter trimming (cutadapt). Additionaly a size range trimming is performed, typically selecting a population of reads between 18 and 30 nt long.
+Read quality (fastqc) is assessed before and after adapter trimming (cutadapt). Additionaly a size range trimming is performed, e.g. selecting a typical population of reads between 18 and 30 nt long.
 
 Usage:
 ```
 nohup bash sRNA.Filter.sh
 ```
-A final file with trimmed reads in raw text format is generated (**sample.trimmed.txt**).
+A final file with trimmed sequences in raw text format is generated (**sample.trimmed.txt**).
 
 ## 2. Removal of structural RNAs
-Trimmed sequences belonging to structural RNAs and 'real' sRNA reads are separated by mapping (bowtie) the reads to a fasta file of only structural RNAs. Unmapped reads are considered for downstream analysis and, after a second mapping, only those aligning without mismatches to the genome are kept (**sample.perfect.txt**).
+Trimmed sequences belonging to structural RNAs and 'authentic' sRNA reads are segregated by mapping (bowtie) the reads to a fasta file with structural RNAs. Unmapped reads are considered for downstream analysis and, after a second mapping, only those aligning with zero  mismatches to the genome are kept (**sample.perfect.txt**).
 
 Usage:
 ```
@@ -140,7 +140,7 @@ TCCGCTGTAGCACTTCAGGCT 51141	21
 
 ## 3. Mapping of selected sRNA size ranges.
 
-Once the working population of sRNA reads have been filtered, further processing can be done selecting customised sRNA sizes. In addition to the whole range of sRNA reads define  here (18-30nt), other usual choices are the 21-22 nt and 24 nt categories. The latter can be taylored in the **sRNA.Mapper.range_1830nt.sh** script by replacing the text string 'size_1830nt' to e.g. and 'size_2122nt' and changing the cutadapt size trimming settings as:
+Once the desired population of sRNA reads have been filtered, further processing can be done focusing on customised sRNA sizes. Apart of  the whole range of sRNA reads define  here (18-30nt), other usual choices are the 21-22 nt and 24 nt categories. The latter can be taylored in the **sRNA.Mapper.range_1830nt.sh** script by replacing the text string 'size_1830nt' to e.g. and 'size_2122nt' and changing the cutadapt size trimming settings as:
 ```
 cutadapt --no-trim -m 21 -M 22 -o sample.size_sel.fastq ../sample.perfect.fastq > summary_NOtrimming.txt;
 ```
@@ -188,24 +188,22 @@ Chr1	17856	17874	178759	Chr1	17023	18924	AT1TE00025
 155073  ACTGCAAAGTTCTTCCGCCTGAT
 231101  ACTGCAAAGTTCTTCCGCCT
 ```
-5. A bedGraph file **sample.bedGraph** (see Figure 1A).
+5. A browsable bedGraph file **sample.bedGraph** (see Figure 1A).
 
 # DOWNSTREAM ANALYSES
 
 The processed data provided so far opens a wide range of analytical possibilities such as studying the relationship between sRNA expression and occurrence of diverse epigenetic marks and/or expression and silencing of genes,transposable elements.
 
-Two basic analyses are presented here as examples.
+Two common basic analyses are presented here as examples.
 
-1. Checking data structure and replicability in the data set. Multivariate analysis  and correlogram.
-With **sRNA.correlogram_plotter.r** it is possible to analyse the table **total_table.size_24.genes.txt** to plot the correlation between particular sRNA expression values across all the samples. A scatterplot in the lower diagonal panel is presented and Pearson correlation coefficients in the upper panel (Figure 2B).
-
-The script **sRNA.ordination_analyser.r** performs a multivariate analysis using the same  input table to evaluate the similarities between samples. By default the samples are ordinated with Nonmetric multidimensional scaling (NMDS) as implemented in the R library vegan. Principal component analysis (PCA) and redundancy analysis (RDA) are also available as alternative ordination approaches (Figure 2C).
+1. Checking data structure and replicability in the data set. Multivariate analysis and correlogram.
+With **sRNA.correlogram_plotter.r** it is possible to analyse the table **total_table.size_24.genes.txt** to plot the correlation between particular sRNA expression values across all the samples. A scatterplot in the lower diagonal panel is presented and Pearson correlation coefficients in the upper panel (Figure 2B). The script **sRNA.ordination_analyser.r** performs a multivariate analysis using the same  input table to evaluate the similarities between samples. By default the samples are ordinated with Nonmetric multidimensional scaling (NMDS) as implemented in the R library vegan. Principal component analysis (PCA) and redundancy analysis (RDA) are also available as alternative ordination approaches (Figure 2C).
 
 ![This is an image](/images/figure1.png)
 
 *Figure 1*. (A) bedGraph files of a wildtype in *Capsella* for different sRNA sizes. (B) Correlogram of 24nt sRNA values over genes in three conditions with two replicates each. (C) NMDS diagram of the same dataset.
 
-## 5. sRNA size distribution over over genes and transposable elements.
+2. sRNA size distribution over over genes and transposable elements.
 
 Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script plots the abundance (RPM) of sRNA reads of different size over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
 
