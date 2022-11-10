@@ -105,7 +105,7 @@ Ordinary assembly fasta files and bowtie indexed fasta files (bowtie-build) shou
 Shell scripts can be cloned and run directly on a linux server.
 
 ```
-https://github.com/Ingefast/small_RNA_analyser.git
+git clone https://github.com/Ingefast/small_RNA_analyser.git
 cd small_RNA_analyser
 ```
 
