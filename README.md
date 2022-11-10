@@ -74,7 +74,7 @@ sample_list="mutant_rep1  mutant_rep2  wt_rep1  wt_rep2";
 #sample_list="test_rep1";
 
 ```
-If removing structural RNAs is wanted prior to downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (with e.g. bedtools getfasta) and bowtie-indexed accordingly. Otherwise the pipeline can be modified accordingly skipping this step.
+If removing structural RNAs is wanted before downstream processing, a fasta file with the selected structural RNAs (including e.g. pre-tRNA, snoRNA, snRNA, rRNA) has to be prepared (with e.g. bedtools getfasta) and bowtie-indexed accordingly. Otherwise the pipeline can easily be modified skipping this step.
 
 Annotation files (gtf or gff3) have to be transformed to a 6-column bed format looking like in the one below (**TAIR10_genes_isoform1_annot.bed**).
 
@@ -85,7 +85,7 @@ Chr1	11649	13714	AT1G01030	.	-
 Chr1	23146	31227	AT1G01040	.	+
 Chr1	28500	28706	AT1G01046	.	+
 ```
-Two annotation bed files, one for genes and one for transposable elements, are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The gff2bed tool from BEDOPS suit is an option. Another possibility, sometimes more pragmatic, is processing it with a combination of linux regular expressions and/or manual editing in a text editor.
+Two annotation bed files, one for genes and one for transposable elements, are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The [gff2bed](https://bedops.readthedocs.io/en/latest/content/reference/file-management/conversion/gff2bed.html) tool from BEDOPS suit is an option. Another possibility, often more pragmatic, is to process it with a combination of linux regular expressions and/or manual editing in a text editor.
 
 Chromosome sizes should also be specified in a reference file (**TAIR10.chrom.sizes**) in the followin way.
 ```
@@ -98,11 +98,16 @@ Chr5	26975502
 
 Annotation files, a fasta file with structural RNAs, and a chromosome size file for the TAIR10 **Arabidopsis** genome are provided under [example](/example/genomic_reference_files).
 
-Ordinary assembly  fasta files and bowtie indexed fasta files (bowtie-build) should be available for the relevant assembly and are usually downloadable from general or organism-specific genome repositories like ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release)).
+Ordinary assembly fasta files and bowtie indexed fasta files (bowtie-build) should be available for the relevant genome and are usually downloadable from general or organism-specific genome repositories like ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release)).
 
 # INSTALLATION
 
 Shell scripts can be cloned and run directly on a linux server.
+
+```
+https://github.com/Ingefast/small_RNA_analyser.git
+cd small_RNA_analyser
+```
 
 # WORKFLOW
 
@@ -198,11 +203,11 @@ The script **sRNA.ordination_analyser.r** performs a multivariate analysis using
 
 ![This is an image](/images/figure1.png)
 
-*Figure 1*. (A) bedGraph files of a wildtype in *Capsella* for different sRNA sizes. (B) Correlogram of 24nt sRNA values over genes in three conditions with two replicates. (C) NMDS diagram of the same dataset.
+*Figure 1*. (A) bedGraph files of a wildtype in *Capsella* for different sRNA sizes. (B) Correlogram of 24nt sRNA values over genes in three conditions with two replicates each. (C) NMDS diagram of the same dataset.
 
 ## 5. sRNA size distribution over over genes and transposable elements.
 
-Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script plots the abundance (RPM) of sRNA reads of different size over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. In order to establish a baseline for normalisation, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**).
+Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script plots the abundance (RPM) of sRNA reads of different size over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
 
 ```
 sample_name	mapped
@@ -233,4 +238,4 @@ Modified versions of this pipeline have been used to process the sRNA datasets i
 2. Wang Z et al (2020). Polymerase IV Plays a Crucial Role in Pollen Development in *Capsella*. **Plant Cell** 32 (4) 950-966.
 
 # CONTACT
-juan.santos at slu.se
+juan.sverige at slu.se
