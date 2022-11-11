@@ -202,7 +202,7 @@ With **sRNA.correlogram_plotter.r** it is possible to analyse the table **total_
 *Figure 1*. (A) bedGraph files of a wildtype in *Capsella* for different sRNA sizes. (B) Correlogram of 24nt sRNA values over genes in three conditions with two replicates each. (C) NMDS diagram of the same dataset.
 
 ## 2. sRNA size distribution over over genes and transposable elements.
-Understanding the relative importance of sRNA of particular sizes on the expression of genes and TEs is central for any sRNA study. The script **sRNA.size_distribution_plotter.r** plots the abundance (RPM) of sRNA reads of different sizes over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
+Understanding the role of sRNA of particular sizes on the expression of genes and TEs is central in any sRNA study. The script **sRNA.size_distribution_plotter.r** plots the abundance (RPM) of sRNA reads of different sizes over selected genomic features (genes and TEs). Inputs are the previously generated **gene.reads.txt** and **te.reads.txt** files. Additionally, a file with total number of mapped reads for each sample has to be created manually (**read_n_baseline.txt**) in order to establish a baseline for normalisation, 
 
 ```
 sample_name	mapped
