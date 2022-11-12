@@ -96,7 +96,7 @@ Chr5	26975502
 
 Annotation files in bed format, a fasta file with structural RNAs, and a text chromosome size file for the TAIR10 **Arabidopsis** genome are provided under [example](/example/genomic_reference_files).
 
-Ordinary assembly fasta files and bowtie indexed fasta files (bowtie-build) should be available for the relevant genome and are usually downloadable from general or organism-specific genome repositories like ([TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release)).
+Ordinary assembly fasta files and bowtie indexed fasta files (bowtie-build) should be available for the relevant genome and are usually downloadable from general or organism-specific genome repositories like [TAIR10](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release).
 
 # INSTALLATION
 
