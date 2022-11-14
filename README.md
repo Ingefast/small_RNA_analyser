@@ -15,7 +15,7 @@ Shell scripts (*.sh) of this software were developed and tested using GNU bash (
 
 The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
 
-fastqc (v0.11.9)
+[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (v0.11.9)
 
 cutadapt (v4.1 with Python 3.8.5)
 
