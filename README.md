@@ -3,10 +3,7 @@
 
 # INTRODUCTION
 
-This is a general pipeline for 
-
-
-sis of small RNA (sRNA) sequencing data from Illumina. It has mainly been developed with focus on the *Arabidopsis* TAIR10 genome and some related species, but it should be fully functional with other organisms. The scripts do not require to pass command-line arguments; settings like input data and reference genomic files have to be specified by editing the script in a text editor. Therefore, some very basic knowledge of linux and R is required. The scripts are generously commented in hashes (#) with complementary suggestions and hints (worth to read as a complement to this instruction). It produces basic background output for customised downstream analysis.
+This is a general pipeline for analysis of small RNA (sRNA) sequencing data from Illumina. It has mainly been developed with focus on the *Arabidopsis* TAIR10 genome and some related species, but it should be fully functional with other organisms. The scripts do not require to pass command-line arguments; settings like input data and reference genomic files have to be specified by editing the script in a text editor. Therefore, some very basic knowledge of linux and R is required. The scripts are generously commented in hashes (#) with complementary suggestions and hints (worth to read as a complement to this instruction). It produces basic background output for customised downstream analysis.
  
 # SUPPORTED PLATFORMS
 
@@ -169,7 +166,7 @@ Chr1    33666   37840   AT1G01060       .       -       0.7474928571
 
 **`gene.counts.txt`**, **`te.counts.txt`**
 
-Combining the two kind of tables across sample above one can easily build a general table for the whole experiment like **total_table.size_24.genes.txt** in the [output](/example/output) folder. Minimal formatting of this table allows for differential expression analysis in e.g. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
+Combining the two kind of tables across sample above one can easily build a general table for the whole experiment like **`total_table.size_24.genes.txt`** in the [output](/example/output) folder. Minimal formatting of this table allows for differential expression analysis in e.g. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
 
 3. Table with sRNA read mapping coordinates, unique read identity number (fourth column), and feature affected.
 
