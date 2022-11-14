@@ -9,7 +9,7 @@ This is a general pipeline for analysis of small RNA (sRNA) sequencing data from
 
 Linux, Mac OS
 
-Shell scripts of this software were developed and tested using GNU bash (v4.4.20) in a Ubuntu 18.04 linux system. R scripts were developed using the R console (v4.1.1) in macOS Monterey.
+Shell scripts of this software were tested using GNU bash (v4.4.20) in a Ubuntu 18.04 linux system. R scripts were tested using the R console (v4.1.1) in macOS Monterey.
 
 # DEPENDENCIES
 
