@@ -13,7 +13,7 @@ Shell scripts of this software were tested using GNU bash (v4.4.20) in a Ubuntu 
 
 # DEPENDENCIES
 
-The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
+The following tools need to be installed and ideally available in the `PATH` environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
 
 [`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (v0.11.9)
 
@@ -23,9 +23,9 @@ The following tools need to be installed and ideally available in the PATH envir
 
 [`ShortStack`](https://sites.psu.edu/axtell/software/shortstack/) (v3.8.5)
 
-bedtools (v2.26.0)
+[`bedtools`](https://bedtools.readthedocs.io/en/latest/#) (v2.26.0)
 
-samtools (v1.3.1)
+[`samtools`](http://www.htslib.org/) (v1.3.1)
 
 # SETTING UP THE WORKING DIRECTORY AND THE GENOMIC REFERENCE FILES
 
