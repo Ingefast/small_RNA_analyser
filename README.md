@@ -15,13 +15,13 @@ Shell scripts of this software were tested using GNU bash (v4.4.20) in a Ubuntu 
 
 The following tools need to be installed and ideally available in the PATH environment. The pipeline is fully functional and tested with the following versions of the packages listed below. Other versions are very likely functional as well, but a detailed compatibility review of older and newer versions has not been done here. 
 
-[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (v0.11.9)
+[`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (v0.11.9)
 
-cutadapt (v4.1 with Python 3.8.5)
+[`cutadapt`](https://cutadapt.readthedocs.io/en/stable/) (v4.1 with Python 3.8.5)
 
-bowtie (v1.3.1)
+[`bowtie`](https://bowtie-bio.sourceforge.net/manual.shtml) (v1.3.1)
 
-ShortStack (v3.8.5)
+[`ShortStack`](https://sites.psu.edu/axtell/software/shortstack/) (v3.8.5)
 
 bedtools (v2.26.0)
 
