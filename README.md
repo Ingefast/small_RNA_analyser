@@ -84,7 +84,7 @@ Chr1	11649	13714	AT1G01030	.	-
 Chr1	23146	31227	AT1G01040	.	+
 Chr1	28500	28706	AT1G01046	.	+
 ```
-Two annotation bed files, one for genes and one for transposable elements (TE), are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The [gff2bed](https://bedops.readthedocs.io/en/latest/content/reference/file-management/conversion/gff2bed.html) tool from BEDOPS suit is an option. Another possibility, often more pragmatic, is to process it with a combination of linux regular expressions and/or manual editing in a text editor.
+Two annotation bed files, one for genes and one for transposable elements (TE), are to be used here. To prepare bed files out of gtf or gff3 files is not straightforward. The [`gff2bed`](https://bedops.readthedocs.io/en/latest/content/reference/file-management/conversion/gff2bed.html) tool from BEDOPS suit is an option. Another possibility, often more pragmatic, is to process it with a combination of linux regular expressions and/or manual editing in a text editor.
 
 Chromosome sizes should also be specified in a reference file (**`TAIR10.chrom.sizes`**) in the followin way.
 ```
